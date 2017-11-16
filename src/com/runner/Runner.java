@@ -11,11 +11,12 @@ public class Runner extends StateBasedGame {
 	//public static final int SPLASHSCREEN = 2;
 	//public static final int MAINMENU = 1;
 	public static final int GAME = 0;
+	public static final int GAMEOVER = 1;
 
 	// Application Properties
 	public static final int WIDTH = 640;
 	public static final int HEIGHT = 480;
-	public static final int FPS = 60;
+	public static final int FPS = 240;
 	public static final double VERSION = 1.0;
 
 	// Class Constructor
@@ -30,7 +31,9 @@ public class Runner extends StateBasedGame {
 		// application is launched
 		// this.addState(new SplashScreen());
 		// his.addState(new MainMenu());
+		this.addState(new GameOver());
 		this.addState(new Game());
+		
 	}
 
 	// Main Method

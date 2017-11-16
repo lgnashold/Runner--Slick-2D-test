@@ -35,7 +35,7 @@ public class Player {
 		//TODO: Fiddle with magic numbers to make a better jumping animation
 		if(isJumping){
 			yVelocity -= .0008*delta;
-			y+=yVelocity;
+			y+=yVelocity*delta;
 			if(y < 0){
 				isJumping = false;
 				y = 0;
