@@ -8,29 +8,32 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.*;
 
-public class Main extends BasicGame
+public class Game extends BasicGameState
 {
+	public static final int ID = 0;
 	private Player player;
 	private List<Obstacle> obstacles;
 	private int score;
 	
-	public Main(String gamename)
+	public Game()
 	{
-		super(gamename);
+		super();
+		System.out.println("Constructor");
 	}
 
-	@Override
-	public void init(GameContainer gc) throws SlickException {
+	public void init(GameContainer gc, StateBasedGame stateBasedGame) throws SlickException {
 		gc.getGraphics().setBackground(new Color(0x3d0560));
 		player = new Player(gc.getGraphics(), gc.getWidth(), gc.getHeight());
 		obstacles = new ArrayList<Obstacle>();
 		score = 0;
+		System.out.println("INIT");
 	}
 
-	@Override
-	public void update(GameContainer gc, int delta) throws SlickException {
+	public void update(GameContainer gc, StateBasedGame arg1, int delta) throws SlickException {
 		if(gc.getInput().isKeyDown(Input.KEY_SPACE)){
 			player.jump();
 		}
@@ -48,8 +51,7 @@ public class Main extends BasicGame
 		}
 	}
 
-	@Override
-	public void render(GameContainer gc, Graphics g) throws SlickException
+	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) throws SlickException
 	{
 		g.setColor(new Color(0x444043));
 		Rectangle rect = new Rectangle(0f, .75f*gc.getHeight(), gc.getWidth(), .25f*gc.getHeight());		
@@ -64,16 +66,27 @@ public class Main extends BasicGame
 		g.drawString("Score: " + score, gc.getWidth() - 100, 3);
 	}
 
-	public static void main(String[] args)
+	/*public static void main(String[] args)
 	{
 		try{
 			AppGameContainer appgc;
-			appgc = new AppGameContainer(new Main("Runner"));
+			appgc = new AppGameContainer(new Game("Runner"));
 			appgc.setDisplayMode(640, 480, false);
 			appgc.start();
 		}
 		catch (SlickException ex){
-			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
 		}
+	}*/
+	
+	public static void endGame() {
+		
 	}
+
+	@Override
+	public int getID() {
+		
+		return Game.ID;
+	}
+
 }
