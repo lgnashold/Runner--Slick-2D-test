@@ -57,6 +57,8 @@ public class Main extends BasicGame
 		player.render();
 		for(Obstacle o : obstacles){
 			o.render();
+			if(o.isTouching(80f, player.getY(), 50f, 50f))
+				System.out.println("TOUCHING");
 		}
 		g.setColor(new Color(0xff00bf));
 		g.drawString("Score: " + score, gc.getWidth() - 100, 3);

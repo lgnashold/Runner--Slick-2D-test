@@ -45,4 +45,8 @@ public class Player {
 			isJumping = true;
 		}
 	}
+	
+	public float getY(){
+		return windowHeight*.75f - y;
+	}
 }
