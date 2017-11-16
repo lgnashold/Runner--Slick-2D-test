@@ -12,6 +12,10 @@ public class Player {
 	private int windowWidth;
 	private boolean isJumping;
 	
+	public final float SIZE = 50;
+	//The default absolute X position
+	public final float X_POSITION = 50;
+	
 	public Player(Graphics graphics, int windowWidth, int windowHeight) {
 		this.graphics = graphics;
 		this.windowHeight = windowHeight;
@@ -21,7 +25,7 @@ public class Player {
 	
 	public void render() {
 		//TODO: Create a real image
-		Rectangle rect = new Rectangle(80, windowHeight*.75f - y+ -50, 50, 50);
+		Rectangle rect = new Rectangle(X_POSITION, windowHeight*.75f - y+ - SIZE, SIZE, SIZE);
 		graphics.setColor(new Color(0xff42ff));
 		graphics.fill(rect);
 		
@@ -44,5 +48,9 @@ public class Player {
 			yVelocity = 0.6f;
 			isJumping = true;
 		}
+	}
+	
+	public float getY(){
+		return windowHeight*.75f - y;
 	}
 }

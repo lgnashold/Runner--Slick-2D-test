@@ -41,5 +41,8 @@ public class Obstacle {
 		return x < -width;
 	}
 	
-	//TODO: create a method to Check Collisions.
+	public boolean isTouching(float otherX, float otherY, float otherWidth, float otherHeight) {
+		return otherX + otherWidth >= x && otherX <= x + width &&
+				otherY<= windowHeight*.75f && otherY + otherHeight >= windowHeight *.75f - height;
+	}
 }
