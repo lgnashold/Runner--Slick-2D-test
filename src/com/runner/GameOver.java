@@ -26,7 +26,7 @@ public class GameOver extends BasicGameState {
 		g.drawString(text, gc.getWidth()/2-gc.getDefaultFont().getWidth(text)/2, gc.getHeight()/2-16);
 		text = "Your Score: " + scores.getCurrentScore() + " High Score: " + scores.getHighScore();
 		g.drawString(text, gc.getWidth()/2-gc.getDefaultFont().getWidth(text)/2, gc.getHeight()/2);
-		text = "Press Enter to Play again";
+		text = "Press Enter to Play again, or Q to quit";
 		g.drawString(text, gc.getWidth()/2-gc.getDefaultFont().getWidth(text)/2, gc.getHeight()/2+16);
 
 	}
@@ -38,6 +38,10 @@ public class GameOver extends BasicGameState {
 			sbg.enterState(0);
 		if(gc.getInput().isKeyDown(Input.KEY_ENTER)){
 			sbg.enterState(0);
+		}
+		if(gc.getInput().isKeyDown(Input.KEY_Q)){
+			gc.exit();
+			System.exit(-1);
 		}
 	}
 

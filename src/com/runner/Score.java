@@ -73,7 +73,7 @@ public class Score implements Serializable {
 			in.close();
 			return score;
 		}catch(Exception e){
-			System.out.println("Could not load highscore");
+			System.out.println("Could not load highscore. Highscore reset to 0.");
 		}
 		return new Score();
 	}
