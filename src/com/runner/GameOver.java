@@ -1,6 +1,7 @@
 package com.runner;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -19,17 +20,23 @@ public class GameOver extends BasicGameState {
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+		Score scores = Score.loadScore(Game.SCORE_FILE);
 		g.setColor(Color.white);
-		g.drawString("GAME OVER", gc.getWidth()/2-40, gc.getHeight()/2-7);
-		g.drawString("Press Space to play again", gc.getWidth()/2-115, gc.getHeight()/2+7);
+		String text = "GAME OVER.";
+		g.drawString(text, gc.getWidth()/2-gc.getDefaultFont().getWidth(text)/2, gc.getHeight()/2-16);
+		text = "Your Score: " + scores.getCurrentScore() + " High Score: " + scores.getHighScore();
+		g.drawString(text, gc.getWidth()/2-gc.getDefaultFont().getWidth(text)/2, gc.getHeight()/2);
+		text = "Press Enter to Play again";
+		g.drawString(text, gc.getWidth()/2-gc.getDefaultFont().getWidth(text)/2, gc.getHeight()/2+16);
+
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		timeElapsed+=delta;
-		if(timeElapsed > 10000)
+		if(timeElapsed > 30000)
 			sbg.enterState(0);
-		if(gc.getInput().isKeyDown(Input.KEY_SPACE)){
+		if(gc.getInput().isKeyDown(Input.KEY_ENTER)){
 			sbg.enterState(0);
 		}
 	}

@@ -17,7 +17,7 @@ public class Game extends BasicGameState {
 	private int timeUntilNextObstacle;
 
 	//Declaring Constant values
-	private final static String SCORE_FILE = "scores.txt";
+	public final static String SCORE_FILE = "scores.txt";
 	//TODO: Think of better names
 	private final int MIN_TIME_BETWEEN_OBSTACLES = 1000;
 	private final int MAX_TIME_BETWEEN_OBSTACLES = 2000;
