@@ -15,18 +15,21 @@ public class Player {
 	public final float SIZE = 50;
 	//The default absolute X position
 	public final float X_POSITION = 50;
+	public final int COLOR  = 0xff42ff;
+	public final float ACCELERATION = .0014f;
+	public final float INITIAL_VELOCITY = -0.8f;
 	
 	public Player(Graphics graphics, int windowWidth, int windowHeight) {
 		this.graphics = graphics;
 		this.windowHeight = windowHeight;
 		this.windowWidth = windowWidth;
-		y = 0;
+		y = windowHeight*.75f - SIZE;
 	}
 	
 	public void render() {
 		//TODO: Create a real image
-		Rectangle rect = new Rectangle(X_POSITION, windowHeight*.75f - y+ - SIZE, SIZE, SIZE);
-		graphics.setColor(new Color(0xff42ff));
+		Rectangle rect = new Rectangle(X_POSITION, y, SIZE, SIZE);
+		graphics.setColor(new Color(COLOR));
 		graphics.fill(rect);
 		
 	}
@@ -34,23 +37,23 @@ public class Player {
 	public void update(int delta) {
 		//TODO: Fiddle with magic numbers to make a better jumping animation
 		if(isJumping){
-			yVelocity -= .0008*delta;
+			yVelocity += ACCELERATION*delta;
 			y+=yVelocity*delta;
-			if(y < 0){
+			if(y > windowHeight * .75f - SIZE){
 				isJumping = false;
-				y = 0;
+				y = windowHeight * .75f - SIZE;
 			}
 		}
 	}
 	
 	public void jump() {
 		if(!isJumping){
-			yVelocity = 0.6f;
+			yVelocity = INITIAL_VELOCITY;
 			isJumping = true;
 		}
 	}
 	
 	public float getY(){
-		return windowHeight*.75f - y;
+		return y;
 	}
 }

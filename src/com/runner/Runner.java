@@ -8,8 +8,6 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Runner extends StateBasedGame {
 
 	// Game state identifiers
-	//public static final int SPLASHSCREEN = 2;
-	//public static final int MAINMENU = 1;
 	public static final int GAME = 0;
 	public static final int GAMEOVER = 1;
 
@@ -29,11 +27,9 @@ public class Runner extends StateBasedGame {
 	public void initStatesList(GameContainer gc) throws SlickException {
 		// The first state added will be the one that is loaded first, when the
 		// application is launched
-		// this.addState(new SplashScreen());
-		// his.addState(new MainMenu());
-		this.addState(new GameOver());
 		this.addState(new Game());
-		
+		this.addState(new GameOver());
+
 	}
 
 	// Main Method
@@ -42,7 +38,7 @@ public class Runner extends StateBasedGame {
 			AppGameContainer app = new AppGameContainer(new Runner("Runner"));
 			app.setDisplayMode(WIDTH, HEIGHT, false);
 			app.setTargetFrameRate(FPS);
-			app.setShowFPS(true);
+			app.setShowFPS(false);
 			app.start();
 		} catch (SlickException e) {
 			e.printStackTrace();

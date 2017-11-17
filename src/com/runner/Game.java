@@ -1,10 +1,6 @@
 package com.runner;
 
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -17,8 +13,15 @@ public class Game extends BasicGameState {
 	public static final int ID = 0;
 	private Player player;
 	private List<Obstacle> obstacles;
-	private int score;
+	private Score score;
+	private int timeUntilNextObstacle;
 
+	//Declaring Constant values
+	private final static String SCORE_FILE = "scores.txt";
+	//TODO: Think of better names
+	private final int MIN_TIME_BETWEEN_OBSTACLES = 1000;
+	private final int MAX_TIME_BETWEEN_OBSTACLES = 2000;
+	
 	public Game() {
 		super();
 		System.out.println("Constructor");
@@ -37,16 +40,18 @@ public class Game extends BasicGameState {
 			obstacles.get(j).update(delta);
 			if (obstacles.get(j).isOffScreen()) {
 				obstacles.remove(j);
-				score++;
+				score.increment();
+				score.updateHighScore();
 			}
 		}
-		// TODO: Create a better system to generate obstacles
-		if (Math.random() < .0006) {
+		timeUntilNextObstacle -= delta;
+		if(timeUntilNextObstacle <= 0){
 			obstacles.add(new Obstacle(gc.getGraphics(), gc.getWidth(), gc.getHeight()));
+			timeUntilNextObstacle = (int)(Math.random() * MIN_TIME_BETWEEN_OBSTACLES + MAX_TIME_BETWEEN_OBSTACLES - MIN_TIME_BETWEEN_OBSTACLES);
 		}
 	}
 
-	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) throws SlickException {
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		g.setColor(new Color(0x444043));
 		Rectangle rect = new Rectangle(0f, .75f * gc.getHeight(), gc.getWidth(), .25f * gc.getHeight());
 		g.fill(rect);
@@ -54,31 +59,25 @@ public class Game extends BasicGameState {
 		for (Obstacle o : obstacles) {
 			o.render();
 			if (o.isTouching(player.X_POSITION, player.getY(), player.SIZE, player.SIZE))
-				endGame(gc, arg1);
+				endGame(gc, sbg);
 		}
-		g.setColor(new Color(0xff00bf));
-		g.drawString("Score: " + score, gc.getWidth() - 100, 3);
+		score.render(gc, g);
 	}
 
-	/*
-	 * public static void main(String[] args) { try{ AppGameContainer appgc;
-	 * appgc = new AppGameContainer(new Game("Runner"));
-	 * appgc.setDisplayMode(640, 480, false); appgc.start(); } catch
-	 * (SlickException ex){
-	 * Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex); } }
-	 */
-
 	public void endGame(GameContainer gc, StateBasedGame sbg) {
-		System.out.println("Should end");
+		System.out.println("Game Ended");
+		score.saveScore(SCORE_FILE);
 		sbg.enterState(1);
 	}
 
 	public void setupNewGame(GameContainer gc, StateBasedGame sbg) {
+		score = Score.loadScore(SCORE_FILE);
 		gc.getGraphics().clear();
 		gc.getGraphics().setBackground(new Color(0x3d0560));
 		player = new Player(gc.getGraphics(), gc.getWidth(), gc.getHeight());
 		obstacles = new ArrayList<Obstacle>();
-		score = 0;
+		score.reset();
+		timeUntilNextObstacle = 0;
 	}
 
 	@Override
@@ -90,5 +89,4 @@ public class Game extends BasicGameState {
 	public void enter(GameContainer gc, StateBasedGame sbg){
 		setupNewGame(gc, sbg);
 	}
-
 }
